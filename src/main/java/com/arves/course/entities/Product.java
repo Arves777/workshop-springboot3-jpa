@@ -1,15 +1,15 @@
 package com.arves.course.entities;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_products")
@@ -23,8 +23,8 @@ public class Product implements Serializable{
 	private Double price;
 	private String imgUrl;
 	
-
-	/*private List<Category> categories = new ArrayList<>();*/
+	@Transient
+	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {
 	}
@@ -78,9 +78,9 @@ public class Product implements Serializable{
 		this.imgUrl = imgUrl;
 	}
 
-	/*public List<Category> getListCategory() {
+	public Set<Category> getCategories() {
 		return categories;
-	}*/
+	}
 
 	@Override
 	public int hashCode() {
