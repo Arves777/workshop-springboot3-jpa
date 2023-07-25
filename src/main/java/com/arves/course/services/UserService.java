@@ -13,6 +13,8 @@ import com.arves.course.repositories.UserRepository;
 import com.arves.course.services.exceptions.DatabaseException;
 import com.arves.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 	@Autowired
@@ -43,9 +45,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User user) {
+		try {
 		User entity = repository.getReferenceById(id);
 		updateData(entity, user);
 		return repository.save(entity);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(e.getMessage());
+		}
 	}
 	
 	private void updateData(User entity, User user) {
